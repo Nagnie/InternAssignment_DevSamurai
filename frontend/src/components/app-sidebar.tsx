@@ -28,7 +28,7 @@ import {
 import {logout} from "@/store/authSlice.ts";
 import {useNavigate} from "react-router-dom";
 
-const AppSidebar: React.FC = () => {
+const AppSidebar: React.FC = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
     const { user } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -55,7 +55,7 @@ const AppSidebar: React.FC = () => {
     ];
 
     return (
-        <Sidebar>
+        <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>

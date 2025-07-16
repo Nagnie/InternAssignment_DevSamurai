@@ -30,6 +30,45 @@ interface MeResponse {
     user: User
 }
 
+interface UserStatsResponse {
+    totalUsers: number
+    usersToday: number
+    usersThisWeek: number
+    usersThisMonth: number
+    chartData: {
+        daily: Array<{
+            date: string
+            count: number
+        }>
+        monthly: Array<{
+            month: string
+            count: number
+        }>
+    }
+}
+
+interface UsersListResponse {
+    users: Array<{
+        id: number
+        name: string
+        email: string
+        createdAt: string
+        updatedAt: string
+    }>
+    pagination: {
+        total: number
+        page: number
+        limit: number
+        totalPages: number
+    }
+}
+
+interface UsersListParams {
+    page?: number
+    limit?: number
+    search?: string
+}
+
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token')
@@ -64,5 +103,20 @@ export const authAPI = {
         api.get('/me')
 }
 
-export type { SignupData, LoginData, AuthResponse, MeResponse }
+export const dashboardAPI = {
+    getUserStats: (): Promise<AxiosResponse<UserStatsResponse>> =>
+        api.get('/auth/stats'),
+    getUsers: (params: UsersListParams = {}): Promise<AxiosResponse<UsersListResponse>> =>
+        api.get('/auth/users', { params })
+}
+
+export type {
+    SignupData,
+    LoginData,
+    AuthResponse,
+    MeResponse,
+    UserStatsResponse,
+    UsersListResponse,
+    UsersListParams
+}
 export default api

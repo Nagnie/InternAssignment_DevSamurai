@@ -1,51 +1,57 @@
-import { useNavigate } from 'react-router-dom'
-import { logout } from '../store/authSlice'
-import { useAppDispatch, useAppSelector } from '../hooks/redux'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { useState } from 'react'
+import { useUserStats } from '../hooks/useUserStats'
+import { useUsersList } from '../hooks/useUsersList'
+import { Badge } from '@/components/ui/badge'
+import StatsCards from './StatsCards'
+import UserChart from './UserChart'
+import UsersTable from './UserTable'
 
-export default function Dashboard() {
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
-    const { user } = useAppSelector(state => state.auth)
+const Dashboard: React.FC = () => {
+    const [page, setPage] = useState(1)
+    const limit = 5
+    const { data: userStats, isLoading: statsLoading, error: statsError } = useUserStats()
+    const { data: usersList, isLoading: usersLoading, error: usersError } = useUsersList({
+        page,
+        limit
+    })
 
-    const handleLogout = () => {
-        dispatch(logout())
-        navigate('/login')
+    if (statsLoading || usersLoading) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+            </div>
+        )
     }
 
-    const getInitials = (name: string | undefined): string => {
-        return name
-            ?.split(' ')
-            .map(word => word[0])
-            .join('')
-            .toUpperCase()
-            .slice(0, 2) || 'U'
+    if (statsError || usersError) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <div className="text-red-500">Error loading dashboard data</div>
+            </div>
+        )
     }
+
+    const stats = userStats?.data
+    const users = usersList?.data
 
     return (
-        <div>
-            {/* Header */}
-            <header className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between items-center py-4">
-                        <div className="flex items-center space-x-4">
-                            <div className="flex items-center space-x-3">
-                                <Avatar>
-                                    <AvatarFallback>{getInitials(user?.name)}</AvatarFallback>
-                                </Avatar>
-                                <div>
-                                    <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                                    <p className="text-sm text-gray-500">{user?.email}</p>
-                                </div>
-                            </div>
-                            <Button variant="outline" className={"cursor-pointer"} onClick={handleLogout}>
-                                Đăng xuất
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </header>
+        <div className="max-w-screen p-6 space-y-6">
+            <div className="flex items-center justify-between">
+                <Badge variant="outline" className="text-sm">
+                    Last updated: {new Date().toLocaleString('vi-VN')}
+                </Badge>
+            </div>
+
+            {/* Stats Cards */}
+            <StatsCards stats={stats} />
+
+            {/* Chart Section */}
+            <UserChart stats={stats} />
+
+            {/* Users Table */}
+            <UsersTable users={users} page={page} setPage={setPage} />
         </div>
     )
 }
+
+export default Dashboard
