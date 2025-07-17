@@ -211,7 +211,7 @@ router.get('/stats', authenticateToken, async (req, res) => {
             });
 
             last6Months.push({
-                month: nextMonth.toISOString().substring(0, 7), // YYYY-MM format
+                month: date.toISOString().substring(0, 7), // YYYY-MM format
                 count
             });
         }

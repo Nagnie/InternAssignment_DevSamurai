@@ -40,7 +40,7 @@ const UserChart: React.FC<UserChartProps> = ({ stats }) => {
         } else {
             return data?.map(item => ({
                 ...item,
-                displayMonth: item.month ? new Date(item.month + '-01').toLocaleDateString('vi-VN', {
+                displayMonth: item.month ? new Date(item.month + '-01').toLocaleDateString('en-US', {
                     month: 'short',
                     year: 'numeric'
                 }) : ''
