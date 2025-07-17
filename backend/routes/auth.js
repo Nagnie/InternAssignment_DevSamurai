@@ -195,8 +195,11 @@ router.get('/stats', authenticateToken, async (req, res) => {
         // Get user registrations by month for the last 6 months (for chart)
         const last6Months = [];
         for (let i = 5; i >= 0; i--) {
-            const date = new Date(today.getFullYear(), today.getMonth() - i, 1);
-            const nextMonth = new Date(today.getFullYear(), today.getMonth() - i + 1, 1);
+            const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            const nextMonth = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
+
+            console.log("date", date);
+            console.log("month", nextMonth);
 
             const count = await db.User.count({
                 where: {
@@ -208,7 +211,7 @@ router.get('/stats', authenticateToken, async (req, res) => {
             });
 
             last6Months.push({
-                month: date.toISOString().substring(0, 7), // YYYY-MM format
+                month: nextMonth.toISOString().substring(0, 7), // YYYY-MM format
                 count
             });
         }
