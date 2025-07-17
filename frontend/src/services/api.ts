@@ -1,7 +1,7 @@
 import axios, {type AxiosResponse } from 'axios'
 import type {User} from '../store/authSlice'
 
-const API_BASE_URL = 'http://localhost:5000' // Thay đổi theo backend URL của bạn
+const API_BASE_URL = import.meta.env.VITE_API_URL
 
 const api = axios.create({
     baseURL: API_BASE_URL,
