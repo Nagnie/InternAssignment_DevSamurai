@@ -68,6 +68,7 @@ npm run dev
 - Admin Dashboard: view user statistics, charts, pagination
 - Realtime API integration using TanStack Query
 - Responsive UI with Tailwind and reusable components
+- Change profile details (name, email, password)
 
 ---
 
@@ -75,4 +76,4 @@ npm run dev
 - Authentication is simplified for demonstration purposes (no refresh token, no email verification).
 - No Docker or advanced CI/CD setup due to time constraints.
 - Frontend and backend hosted separately; CORS is enabled on backend to allow cross-origin requests.
-- Third-party login (e.g. Google) and routes like /settings, /profile, and /contact are present in the UI but not functional in this version.
+- Third-party login (e.g. Google) and routes like /settings and /contact are present in the UI but not functional in this version.
