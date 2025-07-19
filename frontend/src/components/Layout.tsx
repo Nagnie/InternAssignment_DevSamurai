@@ -1,13 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SidebarInset, SidebarProvider, SidebarTrigger} from '@/components/ui/sidebar';
 import AppSidebar from './app-sidebar.tsx';
 import { Separator } from "@/components/ui/separator"
+import {authAPI} from "@/services/api.ts";
 
 interface LayoutProps {
     children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token) {
+            authAPI.getMe().catch(() => {
+                localStorage.removeItem('token')
+                window.location.href = '/login'
+            })
+        }
+    }, [])
+
     return (
         <SidebarProvider>
             <AppSidebar />
