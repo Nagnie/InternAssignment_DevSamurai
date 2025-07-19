@@ -19,7 +19,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             orientation="vertical"
                             className="mr-2 data-[orientation=vertical]:h-4"
                         />
-                        <p className={"font-bold text-lg"}>Overview</p>
                     </div>
                 </header>
                 <main className="flex-1 flex flex-col">

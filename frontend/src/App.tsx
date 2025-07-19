@@ -4,9 +4,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { store } from './store'
 import SignIn from './components/SignIn'
 import SignUp from './components/SignUp'
-import Dashboard from './components/Dashboard'
+import Dashboard from './pages/Dashboard.tsx'
 import ProtectedRoute from './components/ProtectedRoute'
 import Layout from "@/components/Layout.tsx";
+import Profile from './pages/Profile.tsx'
 import './App.css'
 
 const queryClient = new QueryClient()
@@ -30,6 +31,16 @@ function App() {
                             }
                         />
                         <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                        <Route
+                            path="/profile"
+                            element={
+                                <ProtectedRoute>
+                                    <Layout>
+                                        <Profile />
+                                    </Layout>
+                                </ProtectedRoute>
+                            }
+                        />
                     </Routes>
                 </Router>
             </QueryClientProvider>

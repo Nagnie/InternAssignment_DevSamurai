@@ -32,6 +32,7 @@ const AppSidebar: React.FC = ({ ...props }: React.ComponentProps<typeof Sidebar>
     const { user } = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
     const handleLogout = () => {
         dispatch(logout())
         navigate('/login')
@@ -53,6 +54,10 @@ const AppSidebar: React.FC = ({ ...props }: React.ComponentProps<typeof Sidebar>
             url: '/settings'
         },
     ];
+
+    const handleProfile = () => {
+        navigate('/profile');
+    }
 
     return (
         <Sidebar collapsible="icon" {...props}>
@@ -120,7 +125,7 @@ const AppSidebar: React.FC = ({ ...props }: React.ComponentProps<typeof Sidebar>
                                 align="end"
                                 sideOffset={4}
                             >
-                                <DropdownMenuItem>
+                                <DropdownMenuItem onClick={handleProfile}>
                                     <User className="mr-2 size-4" />
                                     <span>Profile</span>
                                 </DropdownMenuItem>

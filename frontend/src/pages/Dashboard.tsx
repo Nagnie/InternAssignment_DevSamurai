@@ -1,15 +1,14 @@
-import { useState } from 'react'
-import { useUserStats } from '../hooks/useUserStats'
-import { useUsersList } from '../hooks/useUsersList'
-import { Badge } from '@/components/ui/badge'
-import StatsCards from './StatsCards'
-import UserChart from './UserChart'
-import UsersTable from './UserTable'
+import React, { useState } from 'react'
+import { useUsersStats, useUsersList } from '../hooks/useDashboard.ts'
+import { Badge } from '@/components/ui/badge.tsx'
+import StatsCards from '../components/StatsCards.tsx'
+import UserChart from '../components/UserChart.tsx'
+import UsersTable from '../components/UserTable.tsx'
 
 const Dashboard: React.FC = () => {
     const [page, setPage] = useState(1)
     const limit = 5
-    const { data: userStats, isLoading: statsLoading, error: statsError } = useUserStats()
+    const { data: userStats, isLoading: statsLoading, error: statsError } = useUsersStats()
     const { data: usersList, isLoading: usersLoading, error: usersError } = useUsersList({
         page,
         limit
@@ -35,8 +34,9 @@ const Dashboard: React.FC = () => {
     const users = usersList?.data
 
     return (
-        <div className="max-w-screen p-6 space-y-6">
+        <div className="max-w-screen p-6 space-y-8">
             <div className="flex items-center justify-between">
+                <h1 className={"font-bold text-4xl"}>Dashboard</h1>
                 <Badge variant="outline" className="text-sm">
                     Last updated: {new Date().toLocaleString('vi-VN')}
                 </Badge>
@@ -44,9 +44,10 @@ const Dashboard: React.FC = () => {
 
             {/* Stats Cards */}
             <StatsCards stats={stats} />
-
-            {/* Chart Section */}
-            <UserChart stats={stats} />
+            <div>
+                {/* Chart Section */}
+                <UserChart stats={stats} />
+            </div>
 
             {/* Users Table */}
             <UsersTable users={users} page={page} setPage={setPage} />

@@ -50,11 +50,6 @@
   --sidebar-ring: oklch(0.707 0.022 261.325);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

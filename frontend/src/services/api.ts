@@ -69,6 +69,25 @@ interface UsersListParams {
     search?: string
 }
 
+interface ChangePasswordData {
+    currentPassword: string
+    newPassword: string
+}
+
+interface UpdateProfileData {
+    name: string
+    email: string
+}
+
+interface ChangePasswordResponse {
+    message: string
+}
+
+interface UpdateProfileResponse {
+    message: string
+    user: User
+}
+
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token')
@@ -100,14 +119,21 @@ export const authAPI = {
     login: (userData: LoginData): Promise<AxiosResponse<AuthResponse>> =>
         api.post('/auth/login', userData),
     getMe: (): Promise<AxiosResponse<MeResponse>> =>
-        api.get('/me')
+        api.get('/auth/me')
 }
 
 export const dashboardAPI = {
     getUserStats: (): Promise<AxiosResponse<UserStatsResponse>> =>
-        api.get('/auth/stats'),
+        api.get('/api/dashboard/stats'),
     getUsers: (params: UsersListParams = {}): Promise<AxiosResponse<UsersListResponse>> =>
-        api.get('/auth/users', { params })
+        api.get('/api/dashboard/users', { params })
+}
+
+export const profileAPI = {
+    changePassword: (data: ChangePasswordData): Promise<AxiosResponse<ChangePasswordResponse>> =>
+        api.put('/api/users/change-password', data),
+    updateProfile: (data: UpdateProfileData): Promise<AxiosResponse<UpdateProfileResponse>> =>
+        api.put('/api/users/profile', data)
 }
 
 export type {
@@ -117,6 +143,10 @@ export type {
     MeResponse,
     UserStatsResponse,
     UsersListResponse,
-    UsersListParams
+    UsersListParams,
+    ChangePasswordData,
+    UpdateProfileData,
+    ChangePasswordResponse,
+    UpdateProfileResponse,
 }
 export default api
