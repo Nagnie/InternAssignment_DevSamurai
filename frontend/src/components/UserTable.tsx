@@ -57,7 +57,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, page, setPage }) => {
     return (
         <Card>
             <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-xl">
                     <Users className="h-5 w-5" />
                     Users List
                     <Badge variant="secondary" className="ml-2">
@@ -69,34 +69,34 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, page, setPage }) => {
                 <div className="rounded-md border">
                     <Table>
                         <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-16">ID</TableHead>
-                                <TableHead>Name</TableHead>
-                                <TableHead>Email</TableHead>
-                                <TableHead>Created At</TableHead>
-                                <TableHead>Updated At</TableHead>
+                            <TableRow className="bg-secondary">
+                                <TableHead className="font-bold w-16">ID</TableHead>
+                                <TableHead className="font-bold w-60">Name</TableHead>
+                                <TableHead className="font-bold w-100">Email</TableHead>
+                                <TableHead className="font-bold">Created At</TableHead>
+                                <TableHead className="font-bold">Updated At</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {users?.users?.map((user: User) => (
-                                <TableRow key={user.id} className="hover:bg-gray-50">
+                                <TableRow key={user.id}>
                                     <TableCell className="font-medium">{user.id}</TableCell>
                                     <TableCell className="font-medium">{user.name}</TableCell>
                                     <TableCell>
                                         <div className="flex items-center gap-2">
-                                            <Mail className="h-4 w-4 text-gray-400" />
+                                            <Mail className="h-4 w-4 text-muted-foreground" />
                                             {user.email}
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                                            <Clock className="h-4 w-4" />
+                                        <div className="flex items-center gap-2 text-sm">
+                                            <Clock className="h-4 w-4 text-muted-foreground" />
                                             {formatDateTime(user.createdAt)}
                                         </div>
                                     </TableCell>
                                     <TableCell>
-                                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                                            <Clock className="h-4 w-4" />
+                                        <div className="flex items-center gap-2 text-sm">
+                                            <Clock className="h-4 w-4 text-muted-foreground" />
                                             {formatDateTime(user.updatedAt)}
                                         </div>
                                     </TableCell>
@@ -108,7 +108,7 @@ const UsersTable: React.FC<UsersTableProps> = ({ users, page, setPage }) => {
 
                 {users?.pagination && (
                     <div className="flex items-center justify-between mt-4">
-                        <div className="text-sm text-gray-600 w-full">
+                        <div className="text-sm text-muted-foreground w-full">
                             Showing {users?.users?.length || 0} of {users?.pagination?.total || 0} users
                         </div>
                         <Pagination className={"justify-end"}>

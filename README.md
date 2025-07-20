@@ -68,7 +68,8 @@ npm run dev
 - Admin Dashboard: view user statistics, charts, pagination
 - Realtime API integration using TanStack Query
 - Responsive UI with Tailwind and reusable components
-- Change profile details (name, email, passwordgit )
+- Change profile details (name, email, password)
+- Dark mode
 
 ---
 

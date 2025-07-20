@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts'
+import {TrendingUpDown} from "lucide-react";
 
 interface ChartDataItem {
     date?: string
@@ -56,7 +57,10 @@ const UserChart: React.FC<UserChartProps> = ({ stats }) => {
         <Card>
             <CardHeader>
                 <div className="flex items-center justify-between">
-                    <CardTitle className="text-xl font-semibold">User Registration Trends</CardTitle>
+                    <CardTitle className="text-xl flex gap-2 items-center font-semibold">
+                        <TrendingUpDown />
+                        User Registration Trends
+                    </CardTitle>
                     <div className="flex space-x-2">
                         <Button
                             variant={chartType === 'daily' ? 'default' : 'outline'}
@@ -76,10 +80,10 @@ const UserChart: React.FC<UserChartProps> = ({ stats }) => {
                 </div>
             </CardHeader>
             <CardContent>
-                <div className="h-80">
+                <div className="h-80 text-black">
                     <ResponsiveContainer width="100%" height="100%">
                         {chartType === 'daily' ? (
-                            <LineChart data={chartData}>
+                            <LineChart accessibilityLayer data={chartData}>
                                 <CartesianGrid strokeDasharray="3 3" />
                                 <XAxis
                                     dataKey="displayDate"
@@ -96,9 +100,9 @@ const UserChart: React.FC<UserChartProps> = ({ stats }) => {
                                 <Line
                                     type="monotone"
                                     dataKey="count"
-                                    stroke="#3b82f6"
+                                    stroke="var(--chart-1)"
                                     strokeWidth={2}
-                                    dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
+                                    dot={{ fill: 'var(--chart-1)', strokeWidth: 2, r: 4 }}
                                     activeDot={{ r: 6 }}
                                 />
                             </LineChart>
@@ -116,7 +120,7 @@ const UserChart: React.FC<UserChartProps> = ({ stats }) => {
                                 />
                                 <Bar
                                     dataKey="count"
-                                    fill="#3b82f6"
+                                    fill="var(--chart-2)"
                                     radius={[4, 4, 0, 0]}
                                 />
                             </BarChart>
