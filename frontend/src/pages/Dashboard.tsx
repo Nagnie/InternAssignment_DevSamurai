@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge.tsx'
 import StatsCards from '../components/StatsCards.tsx'
 import UserChart from '../components/UserChart.tsx'
 import UsersTable from '../components/UserTable.tsx'
+import {HashLoader} from "react-spinners";
 
 const Dashboard: React.FC = () => {
     const [page, setPage] = useState(1)
@@ -16,8 +17,11 @@ const Dashboard: React.FC = () => {
 
     if (statsLoading || usersLoading) {
         return (
-            <div className="flex items-center justify-center h-64">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+            <div className="flex items-center justify-center">
+                <div className="text-center mt-30">
+                    <HashLoader className={"mb-6 mx-auto"} color={"var(--foreground)"} />
+                    <p className="text-muted-foreground">Loading dashboard...</p>
+                </div>
             </div>
         )
     }

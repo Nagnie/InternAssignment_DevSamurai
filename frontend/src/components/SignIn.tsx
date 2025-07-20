@@ -42,7 +42,7 @@ export default function SignIn() {
 
     return (
         <div className={"min-w-screen min-h-screen flex items-center justify-center"}>
-            <div className="bg-white w-110">
+            <div className="w-110">
                 <Card className="w-full px-4 py-8">
                     <CardHeader className={"text-start"}>
                         <CardTitle className={"font-bold text-2xl"}>Sign in to your account</CardTitle>
@@ -133,7 +133,7 @@ export default function SignIn() {
 
                             </Button>
                             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                              <span className="bg-white text-muted-foreground relative z-10 px-2">
+                              <span className="bg-card text-muted-foreground relative z-10 px-2">
                                 Or continue with
                               </span>
                             </div>
@@ -149,9 +149,9 @@ export default function SignIn() {
                         </form>
                     </CardContent>
                     <CardFooter>
-                        <p className="text-gray-600">
+                        <p className="text-muted-foreground">
                             Don't have an account? {'  '}
-                            <Link to="/signup" className="ms-1 text-black font-bold underline">
+                            <Link to="/signup" className="ms-1 text-foreground font-bold underline">
                                 Sign up
                             </Link>
                         </p>

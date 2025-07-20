@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import {User, Lock, Mail, Eye, EyeOff, Loader2, PenLine} from 'lucide-react'
+import {User, Lock, Mail, Eye, EyeOff, PenLine} from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { useChangePassword, useUpdateProfile, useMe } from '../hooks/useProfile'
@@ -8,6 +8,8 @@ import { changePasswordSchema, updateProfileSchema, type ChangePasswordFormData,
 import {useEffect, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {Toaster} from "react-hot-toast";
+import {HashLoader} from "react-spinners";
+import {Card, CardContent, CardHeader} from "@/components/ui/card.tsx";
 
 const Profile = () => {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false)
@@ -66,9 +68,9 @@ const Profile = () => {
     if (userLoading) {
         return (
             <div className="flex items-center justify-center">
-                <div className="text-center">
-                    <Loader2 className="w-8 h-8 animate-spin mx-auto text-blue-600 mb-4" />
-                    <p className="text-gray-600">Loading profile...</p>
+                <div className="text-center mt-30">
+                    <HashLoader className={"mb-6 mx-auto"} color={"var(--foreground)"} />
+                    <p className="text-muted-foreground">Loading profile...</p>
                 </div>
             </div>
         )
@@ -103,32 +105,32 @@ const Profile = () => {
                 {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-4xl font-bold">Profile Settings</h1>
-                    <p className="mt-2 text-gray-600">Manage your account settings and preferences</p>
+                    <p className="mt-2">Manage your account settings and preferences</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     {/* Profile Information */}
-                    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-                        <div className="p-6 border-b border-gray-200">
-                            <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <Card className="rounded-lg shadow-sm border ">
+                        <CardHeader className="border-b">
+                            <h2 className="text-xl font-semibold flex items-center gap-2">
                                 <User className="w-5 h-5" />
                                 Profile Information
                             </h2>
-                        </div>
+                        </CardHeader>
 
-                        <div className="p-6">
-                            <div className="space-y-4">
+                        <CardContent>
+                            <div className="space-y-6">
                                 {/* Name Field */}
-                                <div>
-                                    <Label className="block text-sm font-medium mb-2">
+                                <div className={"space-y-4"}>
+                                    <Label className="font-bold mb-3">
                                         Full Name
                                     </Label>
                                     <div className={"relative"}>
-                                        <PenLine className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                                        <PenLine className="absolute left-3 top-2.5 h-4 w-4" />
                                         <Input
                                         {...profileForm.register('name')}
                                         type="text"
-                                        className="w-full ps-10 pe-3 border border-gray-300 rounded-lg focus:outline-none"
+                                        className="w-full ps-10 pe-3 border rounded-lg focus:outline-none"
                                         placeholder="Enter your full name"
                                     />
                                         {profileForm.formState.errors.name && (
@@ -142,16 +144,16 @@ const Profile = () => {
 
                                 {/* Email Field */}
                                 <div>
-                                    <Label className="block text-sm font-medium mb-2">
+                                    <Label className="font-bold mb-3">
                                         Email Address
                                     </Label>
                                     <div className="relative">
-                                        <Mail className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                                        <Mail className="absolute left-3 top-2.5 h-4 w-4" />
                                         <Input
                                             id="email"
                                             {...profileForm.register('email')}
                                             type="email"
-                                            className="w-full ps-10 pe-3 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                                            className="w-full ps-10 pe-3 py-2 border rounded-lg focus:outline-none"
                                             placeholder="Enter your email"
                                         />
 
@@ -165,7 +167,7 @@ const Profile = () => {
 
                                 {/* Account Info */}
                                 <div>
-                                    <p className="text-sm text-gray-600">
+                                    <p className="text-sm text-muted-foreground">
                                         Member since: {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
                                     </p>
                                 </div>
@@ -175,41 +177,41 @@ const Profile = () => {
                                 <Button
                                     onClick={profileForm.handleSubmit(onUpdateProfile)}
                                     disabled={updateProfileMutation.isPending}
-                                    className="w-full text-white py-2 px-4 rounded-lg"
+                                    className="w-full py-2 px-4 rounded-lg"
                                 >
                                     {updateProfileMutation.isPending ? 'Updating...' : 'Update Profile'}
                                 </Button>
                             </div>
-                        </div>
-                    </div>
+                        </CardContent>
+                    </Card>
 
                     {/* Change Password */}
-                    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-                        <div className="p-6 border-b border-gray-200">
-                            <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                    <Card className="rounded-lg shadow-sm border">
+                        <CardHeader className="border-b">
+                            <h2 className="text-xl font-semibold flex items-center gap-2">
                                 <Lock className="w-5 h-5" />
                                 Change Password
                             </h2>
-                        </div>
+                        </CardHeader>
 
-                        <div className="p-6">
-                            <div className="space-y-4">
+                        <CardContent>
+                            <div className="space-y-6">
                                 {/* Current Password */}
                                 <div>
-                                    <Label className="block text-sm font-medium mb-2">
+                                    <Label className="font-bold mb-3">
                                         Current Password
                                     </Label>
                                     <div className="relative">
-                                        <Lock className={"absolute left-3 top-2.5 h-4 w-4 text-gray-400"}/>
+                                        <Lock className={"absolute left-3 top-2.5 h-4 w-4"}/>
                                         <Input
                                             {...passwordForm.register('currentPassword')}
                                             type={showCurrentPassword ? 'text' : 'password'}
-                                            className="ps-9 pe-9 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                                            className="ps-9 pe-9 py-2 border rounded-lg focus:outline-none"
                                             placeholder="Enter current password"
                                         />
                                         <span
                                             onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                                            className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 cursor-pointer"
+                                            className="absolute right-3 top-2.5 cursor-pointer"
                                         >
                                             {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                         </span>
@@ -223,20 +225,20 @@ const Profile = () => {
 
                                 {/* New Password */}
                                 <div>
-                                    <Label className="block text-sm font-medium mb-2">
+                                    <Label className="font-bold mb-3">
                                         New Password
                                     </Label>
                                     <div className="relative">
-                                        <Lock className={"absolute left-3 top-2.5 h-4 w-4 text-gray-400"}/>
+                                        <Lock className={"absolute left-3 top-2.5 h-4 w-4"}/>
                                         <Input
                                             {...passwordForm.register('newPassword')}
                                             type={showNewPassword ? 'text' : 'password'}
-                                            className="ps-9 pe-9 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                                            className="ps-9 pe-9 py-2 border  rounded-lg focus:outline-none"
                                             placeholder="Enter new password"
                                         />
                                         <span
                                             onClick={() => setShowNewPassword(!showNewPassword)}
-                                            className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 cursor-pointer"
+                                            className="absolute right-3 top-2.5 cursor-pointer"
                                         >
                                             {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                         </span>
@@ -250,20 +252,20 @@ const Profile = () => {
 
                                 {/* Confirm New Password */}
                                 <div>
-                                    <Label className="block text-sm font-medium mb-2">
+                                    <Label className="font-bold mb-3">
                                         Confirm New Password
                                     </Label>
                                     <div className="relative">
-                                        <Lock className={"absolute left-3 top-2.5 h-4 w-4 text-gray-400"}/>
+                                        <Lock className={"absolute left-3 top-2.5 h-4 w-4"}/>
                                         <Input
                                             {...passwordForm.register('confirmNewPassword')}
                                             type={showConfirmPassword ? 'text' : 'password'}
-                                            className="w-full ps-9 pe-9 border border-gray-300 rounded-lg focus:outline-none"
+                                            className="w-full ps-9 pe-9 border  rounded-lg focus:outline-none"
                                             placeholder="Confirm new password"
                                         />
                                         <span
                                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 cursor-pointer"
+                                            className="absolute right-3 top-2.5  cursor-pointer"
                                         >
                                             {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                         </span>
@@ -285,8 +287,8 @@ const Profile = () => {
                                     {changePasswordMutation.isPending ? 'Changing...' : 'Change Password'}
                                 </Button>
                             </div>
-                        </div>
-                    </div>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
         </div>

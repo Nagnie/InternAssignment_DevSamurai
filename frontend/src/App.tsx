@@ -4,7 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { store } from './store'
 import { routeConfig } from './config/routeConfig.tsx'
 import { ThemeProvider } from "@/components/theme-provider.tsx"
-import './App.css'
+import {useEffect} from "react";
+import {authAPI} from "@/services/api.ts";
 
 const queryClient = new QueryClient()
 
@@ -14,6 +15,16 @@ function AppRoutes() {
 }
 
 function App() {
+    useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (token) {
+            authAPI.getMe().catch(() => {
+                localStorage.removeItem('token')
+                window.location.href = '/login'
+            })
+        }
+    }, [])
+
     return (
         <Provider store={store}>
             <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

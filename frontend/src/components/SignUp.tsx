@@ -170,7 +170,7 @@ export default function SignUp() {
                                 Create account
                             </Button>
                             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                              <span className="bg-white text-muted-foreground relative z-10 px-2">
+                              <span className="bg-card text-muted-foreground relative z-10 px-2">
                                 Or continue with
                               </span>
                             </div>
@@ -186,9 +186,9 @@ export default function SignUp() {
                         </form>
                     </CardContent>
                     <CardFooter>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-muted-foreground">
                             Already have an account?{' '}
-                            <Link to="/login" className="ms-1 font-bold underline">
+                            <Link to="/login" className="ms-1 text-foreground font-bold underline">
                                 Sign in
                             </Link>
                         </p>
